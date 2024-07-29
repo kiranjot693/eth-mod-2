@@ -59,11 +59,11 @@ contract kiranssessment {
         return "Eligible Owner";
     }
 
-    function changeOwner(address payable newOwner) public {
-        require(newOwner != address(0), "New owner address cannot be zero");
-        address oldOwner = owner;
-        owner = newOwner;
-        emit OwnerChanged(oldOwner, newOwner);
+    
+    function multiply(uint a, uint b) public returns(uint) {
+        uint result = a * b;
+        emit AdditionResult(result);
+        return result;
     }
 
     function transferFunds(address payable to, uint256 amount) public {
