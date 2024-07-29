@@ -62,7 +62,7 @@ contract kiranssessment {
     
     function multiply(uint a, uint b) public returns(uint) {
         uint result = a * b;
-        emit AdditionResult(result);
+        emit multiplyResult(result);
         return result;
     }
 
