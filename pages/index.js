@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import atm_abi from "../artifacts/contracts/ramanAssessment.sol/ramanAssessment.json";
+import atm_abi from "../artifacts/contracts/kiranAssessment.sol/kiranAssessment.json";
 
 export default function HomePage() {
   const [ethWallet, setEthWallet] = useState(undefined);
@@ -111,7 +111,7 @@ export default function HomePage() {
       const b = parseInt(inputB);
       let tx = await atm.multiply(a, b, { gasLimit: 3000000 });
       const receipt = await tx.wait();
-      const result = receipt.events.find(event => event.event === "AdditionResult").args.result.toNumber();
+      const result = receipt.events.find(event => event.event === "multiplyResult").args.result.toNumber();
       setAdd(result);
     }
   };
