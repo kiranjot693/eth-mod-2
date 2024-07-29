@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import atm_abi from "../artifacts/contracts/kiranAssessment.sol/kiranAssessment.json";
+import atm_abi from "../artifacts/contracts/ramanAssessment.sol/ramanAssessment.json";
 
 export default function HomePage() {
   const [ethWallet, setEthWallet] = useState(undefined);
   const [account, setAccount] = useState(undefined);
   const [atm, setATM] = useState(undefined);
   const [balance, setBalance] = useState(undefined);
-  const [ownerName, setOwnerName] = useState("Kiranjot Singh");
-  const [ownerCity, setOwnerCity] = useState("Mohali ");
+  const [ownerName, setOwnerName] = useState("Kiran jot Singh");
+  const [ownerCity, setOwnerCity] = useState("Mohali");
   const [ownerStatus, setOwnerStatus] = useState("Eligible Owner");
   const [networkID, setNetworkID] = useState(null); // Initialize networkID state
   const [recipientAddress, setRecipientAddress] = useState("");
   const [transferAmount, setTransferAmount] = useState("");
-
+  const [Multiply, setAdd] = useState("");
+  const [inputA, setInputA] = useState("");
+  const [inputB, setInputB] = useState("");
 
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
@@ -103,7 +105,16 @@ export default function HomePage() {
     }
   };
 
-  
+  const multiply = async () => {
+    if (atm) {
+      const a = parseInt(inputA);
+      const b = parseInt(inputB);
+      let tx = await atm.multiply(a, b, { gasLimit: 3000000 });
+      const receipt = await tx.wait();
+      const result = receipt.events.find(event => event.event === "AdditionResult").args.result.toNumber();
+      setAdd(result);
+    }
+  };
   const checkNetworkId = async () => {
     if (!ethWallet) {
       console.error("Ethereum provider not found.");
@@ -114,6 +125,7 @@ export default function HomePage() {
     const network = await provider.getNetwork();
     setNetworkID(network.chainId.toString());
   };
+
 
   const transferFunds = async (toAddress, amount) => {
     if (!ethWallet || !account) {
@@ -208,6 +220,25 @@ export default function HomePage() {
           >
             Transfer Funds
           </button>
+          <h2>multiplication of token</h2>
+        <p style={{ fontFamily: "Sans-serif" }}>Multiply: {Multiply}</p>
+
+        <input
+          type="number"
+          placeholder="Enter the value of first variable A: "
+          value={inputA}
+          onChange={handleInputAChange}
+        />
+        <input
+          type="number"
+          placeholder="Enter the value of the second variable B: "
+          value={inputB}
+          onChange={handleInputBChange}
+        />
+
+        <button style={{ backgroundColor: "yellow" }} onClick={multiply}>
+        Multiply
+        </button>
         </div>
       
       </div>
@@ -222,7 +253,7 @@ export default function HomePage() {
   return (
     <main className="container">
       <header>
-        <h1>WELCOME TO MY ATM ** KIRAN JOT **</h1>
+        <h1>WELCOME TO MY ATM ** Kiran JOT **</h1>
         <p>Let's TRANSACT</p>
         <p>MAKE A SELECTION:-</p>
       </header>
